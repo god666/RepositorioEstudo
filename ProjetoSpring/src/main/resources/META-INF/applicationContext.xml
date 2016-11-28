@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<!-- Permite que as transações sejam ativadas pelas Annotations (Ativar 
+		o pacote "tx" na aba Namespaces) -->
+	<tx:annotation-driven />
+
+	<context:component-scan base-package="br.com.projetospring.dao" />
+
+	<!-- Inicia o Driver do Postgresql para a comunicação com o Banco de Dados -->
+	<bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="password" value="root" />
+		<property name="username" value="postgres" />
+		<property name="url"
+			value="jdbc:postgresql://localhost:5432/projetospring" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<!-- Carregando o bean basicDataSource -->
+		<property name="dataSource" ref="basicDataSource" />
+
+		<!-- Apontando para o arquivo persistence.xml, a partir do campo persistenceUnit -->
+		<!-- É como estivéssemos fazendo => Persistence.createEntityManagerFactory("projetospring_persistence") -->
+		<property name="persistenceUnitName" value="projetospring_persistence" />
+
+		<property name="jpaVendorAdapter">
+			<!-- O id não é obrigatório porque o objeto é local -->
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+				<property name="showSql" value="true" />
+				<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+</beans>
