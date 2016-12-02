@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<head>
+<title>Projeto MVC</title>
+</head>
+<body>
+	<h:form>
+		Name:
+		<h:inputText value="#{clientController.client.name}"/>
+		Username:
+		<h:inputText value="#{clientController.client.username}"/>
+		Password:
+		<h:inputText value="#{clientController.client.password}"/>
+		
+		<h:commandButton actionListener="#{clientController.save()}" value="Save" />
+	</h:form>
+	
+	<h:form>
+		<h:messages/>
+		<h:dataTable border="1" value="#{clientController.clientList}" var="clientVar">
+			<f:facet name="header">Lista de Usuários</f:facet>
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				#{clientVar.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				#{clientVar.name}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Username</f:facet>
+				#{clientVar.username}
+			</h:column>
+			<h:column>
+				<h:commandButton actionListener="#{clientController.edit(clientVar)}" value="Editar" />
+			</h:column>
+			<h:column>
+				<h:commandButton actionListener="#{clientController.delete(clientVar)}" value="Excluir" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</body>
+</html>

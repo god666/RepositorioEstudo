@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario implements Serializable{
+public class Client implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -61,7 +61,7 @@ public class Usuario implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		Client other = (Client) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

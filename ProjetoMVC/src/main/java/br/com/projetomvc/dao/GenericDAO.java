@@ -36,11 +36,14 @@ public abstract class GenericDAO <Objeto> implements InterfaceGenericDAO<Objeto>
 	}
 
 	@Override
+	@Transactional
 	public void delete(Objeto obj) throws DAOException {
+		//Realocate the object into the Spring Context
+		Objeto managedObj = em.merge(obj);
 		try{
-			em.remove(obj);
+			em.remove(managedObj);
 		}catch (Exception e) {
-			throw new DAOException(e);
+			throw new DAOException("Não foi possível excluir", e);
 		}
 		
 	}
