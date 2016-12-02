@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import org.hibernate.annotations.ManyToAny;
 
 @Entity
 public class Client implements Serializable{
@@ -16,6 +19,10 @@ public class Client implements Serializable{
 	private String name;
 	private String username;
 	private String password;
+	
+	@JoinColumn
+	@ManyToOne
+	private ClientProfile profile;
 	
 	public Integer getId() {
 		return id;
@@ -41,6 +48,13 @@ public class Client implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+		public ClientProfile getProfile() {
+		return profile;
+	}
+	public void setProfile(ClientProfile profile) {
+		this.profile = profile;
+	}
+	
 	
 	@Override
 	public int hashCode() {

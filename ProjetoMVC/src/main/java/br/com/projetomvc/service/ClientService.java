@@ -25,12 +25,32 @@ public class ClientService {
 		Client clientMustBeNull = dao.findByUsername(client.getUsername());
 		
 		/*If clientMustBeNull return null, the username is not in the Database. So, 
-		 * the system should allow the insertion*/
-		if (clientMustBeNull==null){
+		 * the system should allow the insertion*/		
+		/*if (clientMustBeNull!=null){
+			return dao.save(client);
+		} else {
+			throw new DuplicatedUsernameException("Duplicated Username");
+		}*/
+		
+		/*if(((clientReturn != null) && (client.getId() != null)) || 
+				((clientReturn == null) && (client.getId()==null))){
+			return dao.save(client);
+		} else {
+			throw new DuplicatedUsernameException("Duplicated Username");
+		}*/
+		if(clientMustBeNull==null){
+			return dao.save(client);
+		} else if(client.getId() == clientMustBeNull.getId()){
 			return dao.save(client);
 		} else {
 			throw new DuplicatedUsernameException("Duplicated Username");
 		}
+		//TODO CORRIGIR ESSE IF => se o clientMustBeNull for null, dá problema com o getid
+		/*if (client.getId() == clientMustBeNull.getId() || (clientMustBeNull==null)){
+			return dao.save(client);
+		} else {
+			throw new DuplicatedUsernameException("Duplicated Username");
+		}*/
 		
 	}
 

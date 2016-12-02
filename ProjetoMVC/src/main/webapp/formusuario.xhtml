@@ -8,6 +8,11 @@
 </head>
 <body>
 	<h:form>
+		<!-- SelectOneMenu value will be insert into Client class -->
+		<h:selectOneMenu value="#{clientController.client.profile}" converter="#{clientProfileConverter}">
+			<f:selectItem itemValue="" itemLabel="Select" noSelectionOption="true"/>
+			<f:selectItems value="#{clientProfileController.profileList}" var="profile" itemLabel="#{profile.description}"/>
+		</h:selectOneMenu>
 		Name:
 		<h:inputText value="#{clientController.client.name}"/>
 		Username:
@@ -25,6 +30,10 @@
 			<h:column>
 				<f:facet name="header">ID</f:facet>
 				#{clientVar.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Perfil</f:facet>
+				#{clientVar.profile.description}
 			</h:column>
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
