@@ -2,6 +2,8 @@ package br.com.projetomvc.dao;
 
 import java.util.List;
 
+import br.com.projetomvc.exception.DAOException;
+
 public interface InterfaceGenericDAO <Objeto>{
 	
 	public Objeto save(Objeto obj);

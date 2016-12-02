@@ -7,6 +7,7 @@ public class MessageUtil {
 
 	public static final String SAVE_SUCESS = "Salvo com Sucesso!";
 	public static final String SAVE_ERROR = "Não foi possível Salvar!";
+	public static final String SAVE_ERROR_DUPLICATED = "Não foi possível Salvar! Usuário já existe!";
 	public static final String DELETE_SUCESS = "O Cliente foi excluído com sucesso!";
 	public static final String DELETE_ERROR = "Não foi possível excluir o Cliente";
 	

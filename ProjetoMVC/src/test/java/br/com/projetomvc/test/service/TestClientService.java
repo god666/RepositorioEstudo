@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.projetomvc.dao.InterfaceClientDAO;
 import br.com.projetomvc.entity.Client;
+import br.com.projetomvc.exception.DuplicatedUsernameException;
 import br.com.projetomvc.service.ClientService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +29,7 @@ public class TestClientService {
 	
 	@Transactional
 	@Test
-	public void mustSave(){
+	public void mustSave() throws DuplicatedUsernameException{
 		Client client = new Client();
 		client.setName("name save");
 		client.setPassword("password save");
@@ -43,8 +44,8 @@ public class TestClientService {
 	}
 	
 	@Transactional
-	@Test
-	public void mustNotSave(){
+	@Test(expected=DuplicatedUsernameException.class)
+	public void mustNotSave() throws DuplicatedUsernameException{
 		Client client = new Client();
 		client.setName("name save");
 		client.setPassword("password save");
@@ -53,7 +54,6 @@ public class TestClientService {
 		
 		Client savedClient= service.save(client);
 		
-		Assert.assertNull(savedClient);
 	}
 
 }

@@ -10,6 +10,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.projetomvc.exception.DAOException;
+
 @Repository
 public abstract class GenericDAO <Objeto> implements InterfaceGenericDAO<Objeto>{
 

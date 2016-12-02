@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.projetomvc.dao.ClientDAO;
-import br.com.projetomvc.dao.DAOException;
 import br.com.projetomvc.dao.InterfaceClientDAO;
 import br.com.projetomvc.entity.Client;
+import br.com.projetomvc.exception.DAOException;
+import br.com.projetomvc.exception.DuplicatedUsernameException;
 import br.com.projetomvc.util.MessageUtil;
 
 @Service
@@ -20,7 +21,7 @@ public class ClientService {
 	@Qualifier("clientDAO")
 	InterfaceClientDAO<Client> dao;
 	
-	public Client save(Client client){
+	public Client save(Client client) throws DuplicatedUsernameException{
 		Client clientMustBeNull = dao.findByUsername(client.getUsername());
 		
 		/*If clientMustBeNull return null, the username is not in the Database. So, 
@@ -28,7 +29,7 @@ public class ClientService {
 		if (clientMustBeNull==null){
 			return dao.save(client);
 		} else {
-			return null;
+			throw new DuplicatedUsernameException("Duplicated Username");
 		}
 		
 	}

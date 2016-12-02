@@ -7,8 +7,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.projetomvc.dao.DAOException;
 import br.com.projetomvc.entity.Client;
+import br.com.projetomvc.exception.DAOException;
+import br.com.projetomvc.exception.DuplicatedUsernameException;
 import br.com.projetomvc.service.ClientService;
 import br.com.projetomvc.util.MessageUtil;
 
@@ -27,14 +28,19 @@ public class ClientController {
 	}
 	
 	public void save(){
-		Client savedClient = service.save(client);
-		MessageUtil.sucessMessage(MessageUtil.SAVE_SUCESS);
-		/*It will occor only when a new client was registered (ID is null). A update will not 
-		 * refresh the list*/
-		if(client.getId()==null){
-			clientList.add(savedClient);
+		try {
+			Client savedClient = service.save(client);
+			MessageUtil.sucessMessage(MessageUtil.SAVE_SUCESS);
+			/*It will occor only when a new client was registered (ID is null). A update will not 
+			 * refresh the list*/
+			if(client.getId()==null){
+				clientList.add(savedClient);
+			}
+			client = new Client();
+		} catch (DuplicatedUsernameException e) {
+			MessageUtil.sucessMessage(MessageUtil.SAVE_ERROR_DUPLICATED);
 		}
-		client = new Client();
+		
 		
 	}
 	

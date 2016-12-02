@@ -10,10 +10,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.projetomvc.dao.DAOException;
 import br.com.projetomvc.dao.InterfaceClientDAO;
 import br.com.projetomvc.dao.ClientDAO;
 import br.com.projetomvc.entity.Client;
+import br.com.projetomvc.exception.DAOException;
 
 import java.util.List;
 

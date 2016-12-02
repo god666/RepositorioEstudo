@@ -1,4 +1,4 @@
-package br.com.projetomvc.dao;
+package br.com.projetomvc.exception;
 
 public class DAOException extends Exception {
 
