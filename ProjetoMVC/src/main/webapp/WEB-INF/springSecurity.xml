@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<security:http auto-config="true" use-expressions="true">
+		<!-- CSRF é um tipo de ataque. Deixar disable para não ter que criar token -->
+		<security:csrf disabled="true" />
+
+		<security:intercept-url pattern="/admin/*"
+			access="isAuthenticated()" />
+
+		<!-- O hasAuthority foi colocado no lugar de hasRole. Motivo: o método 
+			hasRole precisa necessariamente que o tipo ADMIN (nesse caso) tenha a substring 
+			"ROLE" em sua composição. Nesse caso ficaria "ROLE_ADMIN" -->
+		<security:intercept-url pattern="/admin/*"
+			access="hasAuthority('ADMIN')" />
+
+		<security:form-login login-page="/login.xhtml"
+			default-target-url="/admin/index.xhtml" authentication-failure-url="/login.xhtml?erro=t"
+			password-parameter="password" username-parameter="username"
+			login-processing-url="/j_spring_security_check" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<!-- O mesmo basicDataSource do arquivo applicationContext.xml -->
+			<security:jdbc-user-service
+				data-source-ref="basicDataSource"
+				users-by-username-query="select username, password, enabled from 
+				client where username=?"
+				authorities-by-username-query="select c.username, cp.description from 
+				client c, clientProfile cp where c.profile_id=cp.id and c.username=?" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>

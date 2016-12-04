@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<head>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
 <title>Projeto MVC</title>
-</head>
+</h:head>
 <body>
 	<h:form>
 		<!-- SelectOneMenu value will be insert into Client class -->
@@ -19,6 +20,10 @@
 		<h:inputText value="#{clientController.client.username}"/>
 		Password:
 		<h:inputText value="#{clientController.client.password}"/>
+		Email:
+		<h:inputText value="#{clientController.client.email}">
+			<f:validator validatorId="emailValidator"/>
+		</h:inputText>
 		
 		<h:commandButton actionListener="#{clientController.save()}" value="Save" />
 	</h:form>
@@ -42,6 +47,10 @@
 			<h:column>
 				<f:facet name="header">Username</f:facet>
 				#{clientVar.username}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+				#{clientVar.email}
 			</h:column>
 			<h:column>
 				<h:commandButton actionListener="#{clientController.edit(clientVar)}" value="Editar" />

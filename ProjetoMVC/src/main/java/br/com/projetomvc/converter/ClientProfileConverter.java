@@ -23,14 +23,12 @@ public class ClientProfileConverter implements Converter {
 		}catch (Exception e) {
 			e.getStackTrace();
 			return null;
-		}
-		
-		
+		}	
 	}
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object clientProfile) {
-		if(!clientProfile.equals("")){
+		if(clientProfile instanceof ClientProfile){
 			ClientProfile profile = (ClientProfile) clientProfile;
 			return profile.getId().toString();
 		} else {
