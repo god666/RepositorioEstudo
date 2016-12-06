@@ -37,6 +37,7 @@
 	
 	<!-- Create the Database Access -->
 	<bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="password" value="root"/>
 		<property name="username" value="postgres"/>
 		<property name="url" value="jdbc:postgresql://localhost:5432/projetomvc"/>
